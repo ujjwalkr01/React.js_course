@@ -6,23 +6,25 @@ so we have to wrap all the div inside one parent component then it wil not give 
 --> we can use dynamic data by adding the {} between the elements
 
 */
-import ExpenseDate from './ExpenseDate';
-import './ExpenseItem.css';
-import Card from './Card';
+import ExpenseDate from "./ExpenseDate";
+import "./ExpenseItem.css";
+import Card from "./Card";
 
 function ExpenseItem(props) {
   // const expenseDate=new Date(2023, 5,27);
   // const expenseTitle='Car Insurance';
   // const expensePrice=50000;
-   
+
   return (
-    <Card className='expense-item'>
-      <ExpenseDate date={props.date}></ExpenseDate>
-      <div className='expense-item__description'>
-        <h2>{props.title}</h2>
-        <div className='expense-item__price'>Rs {props.amount}</div>
-      </div>
-    </Card>
+    <li>
+      <Card className="expense-item">
+        <ExpenseDate date={props.date}></ExpenseDate>
+        <div className="expense-item__description">
+          <h2>{props.title}</h2>
+          <div className="expense-item__price">Rs {props.amount}</div>
+        </div>
+      </Card>
+    </li>
   );
 }
 export default ExpenseItem;
