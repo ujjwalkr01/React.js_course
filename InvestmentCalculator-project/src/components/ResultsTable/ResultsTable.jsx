@@ -34,7 +34,7 @@ const ResultsTable = (props) => {
             </td>
             <td>
               {formatter.format(
-                props.initialInvestment +
+                parseInt(props.initialInvestment) +
                   yearData.yearlyContribution * yearData.year
               )}
             </td>
