@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import style from "./AddUser.module.css";
@@ -10,23 +10,27 @@ const initialVal = {
 };
 
 const AddUsers = (props) => {
-  const [enteredUserInput, setEnteredUserInput] = useState(initialVal);
+  // const [enteredUserInput, setEnteredUserInput] = useState(initialVal);
   const [error, setError] = useState();
+  const usernameInput = useRef(initialVal.username);
+  const userageInput = useRef(initialVal.age);
 
   const addUserHandler = (event) => {
     event.preventDefault();
+    // console.log(usernameInput);
+    // console.log(userAgeInput);
+    const enteredName = usernameInput.current.value;
+    const enteredAge = userageInput.current.value;
 
-    if (
-      enteredUserInput.username.trim().length === 0 ||
-      enteredUserInput.age.trim().length === 0
-    ) {
+    //  console.log(userAgeInput,userNameInput)
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setError({
         title: "Invalid input",
         message: "Please enter a valid name and age (non-empty values).",
       });
       return;
     }
-    if (enteredUserInput.age < 1) {
+    if (enteredAge < 1) {
       setError({
         title: "Invalid age",
         message: "Please enter a valid age (> 0).",
@@ -35,18 +39,25 @@ const AddUsers = (props) => {
     }
 
     // console.log(enteredUserInput);
-    props.addNewUser(enteredUserInput);
-    setEnteredUserInput(initialVal);
+    // props.addNewUser(enteredUserInput);
+    props.addNewUser(enteredName, enteredAge);
+    // setEnteredUserInput(initialVal);
+
+    /*here we have used the useRef hooks to mutate the object that is rendered but we should never mutate  with ref instead we should use useState hook*/
+    usernameInput.current.value = "";
+    userageInput.current.value = "";
   };
 
-  const handleUserInput = (input, value) => {
-    setEnteredUserInput((prevInput) => {
-      return {
-        ...prevInput,
-        [input]: value,
-      };
-    });
-  };
+  /* All the commented part are used with useState Hooks */
+
+  // const handleUserInput = (input, value) => {
+  //   setEnteredUserInput((prevInput) => {
+  //     return {
+  //       ...prevInput,
+  //       [input]: value,
+  //     };
+  //   });
+  // };
 
   const errorHandler = () => {
     setError(null);
@@ -66,17 +77,19 @@ const AddUsers = (props) => {
           <input
             id="username"
             type="text"
-            value={enteredUserInput.username}
-            onChange={(event) =>
-              handleUserInput("username", event.target.value)
-            }
+            // value={enteredUserInput.username}
+            // onChange={(event) =>
+            //   handleUserInput("username", event.target.value)
+            // }
+            ref={usernameInput}
           />
           <label htmlFor="age">Age (Years)</label>
           <input
             id="age"
             type="number"
-            value={enteredUserInput.age}
-            onChange={(event) => handleUserInput("age", event.target.value)}
+            // value={enteredUserInput.age}
+            // onChange={(event) => handleUserInput("age", event.target.value)}
+            ref={userageInput}
           />
           <Button type="submit">Add User</Button>
         </form>
