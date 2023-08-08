@@ -4,37 +4,66 @@ let workList = "",
   arr = [];
 function App() {
   const [isAddingTask, setTask] = useState(workList);
+  const [taskArr, setTaskArr] = useState([]);
+  const [isEditClicked, setEditedValue] = useState(false);
+  const [editedTask,setEditedTask]=useState('');
 
   const handletheList = (event) => {
     workList = event.target.value;
+    setTask(workList);
   };
 
   const handleTask = () => {
     if (workList == "") {
       return;
     }
-    // arr.push(workList);
-    console.log(workList, arr);
-    setTask((prevState) => {
-      prevState=workList;
-      arr.push(prevState);
-      return prevState;
-    });
+    console.log(workList, taskArr);
+    setTaskArr([...taskArr, isAddingTask]);
     console.log(isAddingTask);
   };
 
+  const handleEdit = () => {
+    setEditedValue((prevState) => !isEditClicked);
+  };
+
+  const handleDelete = () => {};
+
+  const handleEditTask=(event)=>{
+    console.log(event.target.value)
+  }
+
+  const handleSaveButton=()=>{
+
+  }
   return (
     <div className="main">
-      <textarea id="task" type="text" onChange={handletheList} />
+      <textarea
+        id="task"
+        type="text"
+        onChange={handletheList}
+        value={isAddingTask}
+      />
       <button id="btn" onClick={handleTask}>
         Add Task
       </button>
       <ul>
-        {/* {arr.map((ele, ind) => (
-          <li key={ind} className="list">
-            {ele}
+        {taskArr.map((task, ind) => (
+          <li key={ind} id={ind} className="list">
+            {task}
+            <button className="edit" onClick={handleEdit}>
+              Edit
+            </button>
+            <button className="delete" onClick={handleDelete}>
+              Delete
+            </button>
+            {isEditClicked && (
+              <>
+                <textarea className="editTask" onChange={handleEditTask} value={editedTask}/>
+                <button className="saveTask" onClick={handleSaveButton}>Save</button>
+              </>
+            )}
           </li>
-        ))} */}
+        ))}
       </ul>
     </div>
   );
