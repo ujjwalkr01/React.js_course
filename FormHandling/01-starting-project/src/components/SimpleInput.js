@@ -13,6 +13,11 @@ const SimpleInput = (props) => {
 
   const enteredNameisValid = enteredName !== "";
   const nameInputisInvalid = !enteredNameisValid && enteredNameTouched;
+  let formIsValid = false;
+
+  if (enteredNameisValid) {
+    formIsValid = true;
+  }
 
   const nameInputChangeHandler = (event) => {
     //For everyKeyStroke...
@@ -71,7 +76,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
